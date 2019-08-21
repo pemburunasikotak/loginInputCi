@@ -93,7 +93,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		SELAMANAT DATANG 
 
+		<?php echo form_open('welcome/logout')?>
+		<button type="Submit" name="keluar" class="btn btn-primary" id="daftar" >keluar</button>
+		<?php echo form_close()?>
+
+
 	</div>
+	
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 </div>

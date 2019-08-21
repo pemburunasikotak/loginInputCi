@@ -18,20 +18,45 @@ class Welcome extends CI_Controller {
 			$user = $this->input->post('email',true);
 			$pass = $this->input->post('password',true);
 			$cek = $this->app_model->proseslogin($user,$pass);
-			$hasil = count($cek);//hitung nilai jika lebih dari 0 berhasil 
+			print_r($cek);
+			//$hasil = count($cek);//hitung nilai jika lebih dari 0 berhasil 
+			//echo $hasil;
+			
+			//$where = array(
+			//	'username' => $user,
+			//	'password' =>$pass
+			//	);
+			//$cek = $this->app_model->cek_login('users',$where)->num_rows();
+			if($cek > 0){
+	
+				$data_session = array(
+					'nama' => $user,
+					'status' => "login"
+					);
+	
+				$this->session->set_userdata($data_session);
+	
+				redirect('welcome/beranda');
+	
+			}else{
+				echo "Username dan password salah !";
+				redirect('welcome/index');
+			
+			}
+			/*
 			if($hasil>0){
 				//digunakan untuk mengalihakan ke halaman beranda yang ada di controller
 				redirect('welcome/beranda');
-				/*
+				
 				$log = $this->db->get_where('users',array('username' =>$user,'password'=>$pass))->row();
 					if(){
 
 					}
 				//echo $log->email ;
-				*/
+				
 			}else{
 				redirect('welcome/index');
-			}
+			}*/
 
 		}
 	}
@@ -89,4 +114,16 @@ class Welcome extends CI_Controller {
 	public function beranda(){
 		$this->load->view('beranda');
 	}
+	function logout(){
+		$user = $this->input->post('email',true);
+		
+		$data_session = array(
+			'nama' => $user,
+			'status' => "login"
+			);
+		$this->session->sess_destroy($data_session);
+		//print_r($this->session->userdata());	 	
+        $this->load->view('welcome_message');
+    }	
+
 }
